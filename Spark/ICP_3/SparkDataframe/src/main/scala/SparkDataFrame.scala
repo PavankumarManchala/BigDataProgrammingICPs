@@ -32,8 +32,10 @@ object SparkDataFrame {
 
     df.write.format("csv").save("C:\\Users\\Pavankumar Manchala\\Downloads\\Source Code\\SparkDataframe\\output")
 
-    val DupDF = spark.sql("select COUNT(*) from survey GROUP By Timestamp Having COUNT(*) > 1")
-    DupDF.show()
+    val DupDF = spark.sql("select COUNT(*),Country,Timestamp from survey GROUP By Timestamp,Country Having COUNT(*) > 1")
+    val uniq=df.dropDuplicates().show()
+    println("no of duplicate records "+ uniq)
+//    DupDF.show()
 
     val counts=df.count()
     println("total records"+counts)
